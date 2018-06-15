@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.5
-Release  : 6
+Release  : 7
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.5/borgbackup-1.1.5.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.5/borgbackup-1.1.5.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.5/borgbackup-1.1.5.tar.gz.asc
@@ -15,6 +15,7 @@ Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause CC0-1.0
 Requires: borgbackup-bin
 Requires: borgbackup-python3
+Requires: borgbackup-license
 Requires: borgbackup-python
 Requires: msgpack-python
 BuildRequires : acl-dev
@@ -26,7 +27,6 @@ BuildRequires : pip
 BuildRequires : pluggy
 BuildRequires : py-python
 BuildRequires : pytest
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : setuptools_scm
@@ -43,9 +43,18 @@ there.
 %package bin
 Summary: bin components for the borgbackup package.
 Group: Binaries
+Requires: borgbackup-license
 
 %description bin
 bin components for the borgbackup package.
+
+
+%package license
+Summary: license components for the borgbackup package.
+Group: Default
+
+%description license
+license components for the borgbackup package.
 
 
 %package python
@@ -74,11 +83,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522541915
+export SOURCE_DATE_EPOCH=1529093811
 python3 setup.py build -b py3
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/borgbackup
+cp LICENSE %{buildroot}/usr/share/doc/borgbackup/LICENSE
+cp docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_lz4_LICENSE
+cp docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_zstd_LICENSE
+cp docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_blake2_COPYING
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -91,6 +105,13 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 /usr/bin/borg
 /usr/bin/borgfs
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/borgbackup/LICENSE
+/usr/share/doc/borgbackup/docs_3rd_party_blake2_COPYING
+/usr/share/doc/borgbackup/docs_3rd_party_lz4_LICENSE
+/usr/share/doc/borgbackup/docs_3rd_party_zstd_LICENSE
 
 %files python
 %defattr(-,root,root,-)
