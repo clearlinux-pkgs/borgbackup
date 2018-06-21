@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.1.5
-Release  : 7
-URL      : https://github.com/borgbackup/borg/releases/download/1.1.5/borgbackup-1.1.5.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.1.5/borgbackup-1.1.5.tar.gz
-Source99 : https://github.com/borgbackup/borg/releases/download/1.1.5/borgbackup-1.1.5.tar.gz.asc
+Version  : 1.1.6
+Release  : 8
+URL      : https://github.com/borgbackup/borg/releases/download/1.1.6/borgbackup-1.1.6.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.1.6/borgbackup-1.1.6.tar.gz
+Source99 : https://github.com/borgbackup/borg/releases/download/1.1.6/borgbackup-1.1.6.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause CC0-1.0
@@ -35,10 +35,8 @@ BuildRequires : virtualenv
 BuildRequires : zstd-dev
 
 %description
-Here we store 3rd party documentation, licenses, etc.
-Please note that all files inside the "borg" package directory (except the
-stuff excluded in setup.py) will be INSTALLED, so don't keep docs or licenses
-there.
+What is BorgBackup?
+        -------------------
 
 %package bin
 Summary: bin components for the borgbackup package.
@@ -76,14 +74,14 @@ python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.1.5
+%setup -q -n borgbackup-1.1.6
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1529093811
+export SOURCE_DATE_EPOCH=1529611123
 python3 setup.py build -b py3
 
 %install
