@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.1.6
-Release  : 13
-URL      : https://github.com/borgbackup/borg/releases/download/1.1.6/borgbackup-1.1.6.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.1.6/borgbackup-1.1.6.tar.gz
-Source99 : https://github.com/borgbackup/borg/releases/download/1.1.6/borgbackup-1.1.6.tar.gz.asc
+Version  : 1.1.7
+Release  : 14
+URL      : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
+Source99 : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause CC0-1.0
@@ -19,16 +19,13 @@ Requires: borgbackup-license
 Requires: borgbackup-python
 Requires: msgpack-python
 BuildRequires : acl-dev
+BuildRequires : buildreq-distutils3
 BuildRequires : lz4-dev
 BuildRequires : msgpack-python
 BuildRequires : openssl-dev
-BuildRequires : pbr
-BuildRequires : pip
 BuildRequires : pluggy
 BuildRequires : py-python
 BuildRequires : pytest
-BuildRequires : python3-dev
-BuildRequires : setuptools
 BuildRequires : setuptools_scm
 BuildRequires : tox
 BuildRequires : virtualenv
@@ -74,23 +71,23 @@ python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.1.6
+%setup -q -n borgbackup-1.1.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1529611123
+export SOURCE_DATE_EPOCH=1534176251
 python3 setup.py build -b py3
 
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/borgbackup
 cp LICENSE %{buildroot}/usr/share/doc/borgbackup/LICENSE
+cp docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_blake2_COPYING
 cp docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_lz4_LICENSE
 cp docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_zstd_LICENSE
-cp docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/doc/borgbackup/docs_3rd_party_blake2_COPYING
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
