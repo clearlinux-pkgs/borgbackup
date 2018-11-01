@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.7
-Release  : 15
+Release  : 16
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz.asc
@@ -17,11 +17,11 @@ Requires: borgbackup-bin = %{version}-%{release}
 Requires: borgbackup-license = %{version}-%{release}
 Requires: borgbackup-python = %{version}-%{release}
 Requires: borgbackup-python3 = %{version}-%{release}
-Requires: msgpack-python
+Requires: llfuse
+Requires: msgpack
 BuildRequires : acl-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : lz4-dev
-BuildRequires : msgpack-python
 BuildRequires : openssl-dev
 BuildRequires : pluggy
 BuildRequires : py-python
@@ -30,6 +30,7 @@ BuildRequires : setuptools_scm
 BuildRequires : tox
 BuildRequires : virtualenv
 BuildRequires : zstd-dev
+Patch1: 0001-fix-msgpack-version-reqs.patch
 
 %description
 What is BorgBackup?
@@ -72,13 +73,14 @@ python3 components for the borgbackup package.
 
 %prep
 %setup -q -n borgbackup-1.1.7
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1540421556
+export SOURCE_DATE_EPOCH=1541108668
 python3 setup.py build
 
 %install
