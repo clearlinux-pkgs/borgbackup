@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.7
-Release  : 18
+Release  : 19
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz.asc
@@ -80,7 +80,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542384538
+export SOURCE_DATE_EPOCH=1542384705
 python3 setup.py build
 
 %install
