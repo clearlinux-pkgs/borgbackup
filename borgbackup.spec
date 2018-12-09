@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.1.7
-Release  : 21
-URL      : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz
-Source99 : https://github.com/borgbackup/borg/releases/download/1.1.7/borgbackup-1.1.7.tar.gz.asc
+Version  : 1.1.8
+Release  : 22
+URL      : https://github.com/borgbackup/borg/releases/download/1.1.8/borgbackup-1.1.8.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.1.8/borgbackup-1.1.8.tar.gz
+Source99 : https://github.com/borgbackup/borg/releases/download/1.1.8/borgbackup-1.1.8.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause CC0-1.0
@@ -72,7 +72,7 @@ python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.1.7
+%setup -q -n borgbackup-1.1.8
 %patch1 -p1
 
 %build
@@ -80,10 +80,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542385042
+export SOURCE_DATE_EPOCH=1544334433
+export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/borgbackup
 cp LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/LICENSE
