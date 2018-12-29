@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.8
-Release  : 22
+Release  : 23
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.8/borgbackup-1.1.8.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.8/borgbackup-1.1.8.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.8/borgbackup-1.1.8.tar.gz.asc
