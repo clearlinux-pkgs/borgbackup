@@ -171,7 +171,7 @@ The best check that everything is ok is to run a dry-run extraction::
 Changelog
 =========
 
-Version 1.1.8 (2018-12-09)
+Version 1.1.9 (2019-02-10)
 --------------------------
 
 Compatibility notes:
@@ -190,6 +190,57 @@ Compatibility notes:
     You can avoid the one-time slowdown by using the pre-1.1.0rc4-compatible
     mode (but that is less safe for detecting changed files than the default).
     See the --files-cache docs for details.
+
+Fixes:
+
+- security fix: configure FUSE with "default_permissions", #3903
+  "default_permissions" is now enforced by borg by default to let the
+  kernel check uid/gid/mode based permissions.
+  "ignore_permissions" can be given to not enforce "default_permissions".
+- make "hostname" short, even on misconfigured systems, #4262
+- fix free space calculation on macOS (and others?), #4289
+- config: quit with error message when no key is provided, #4223
+- recover_segment: handle too small segment files correctly, #4272
+- correctly release memoryview, #4243
+- avoid diaper pattern in configparser by opening files, #4263
+- add "# cython: language_level=3" directive to .pyx files, #4214
+- info: consider part files for "This archive" stats, #3522
+- work around Microsoft WSL issue #645 (sync_file_range), #1961
+
+New features:
+
+- add --rsh command line option to complement BORG_RSH env var, #1701
+- init: --make-parent-dirs parent1/parent2/repo_dir, #4235
+
+Other:
+
+- add archive name to check --repair output, #3447
+- check for unsupported msgpack versions
+- shell completions:
+
+  - new shell completions for borg 1.1.9
+  - more complete shell completions for borg mount -o
+  - added shell completions for borg help
+  - option arguments for zsh tab completion
+- docs:
+
+  - add FAQ regarding free disk space check, #3905
+  - update BORG_PASSCOMMAND example and clarify variable expansion, #4249
+  - FAQ regarding change of compression settings, #4222
+  - add note about BSD flags to changelog, #4246
+  - improve logging in example automation script
+  - add note about files changing during backup, #4081
+  - work around the backslash issue, #4280
+  - update release workflow using twine (docs, scripts), #4213
+  - add warnings on repository copies to avoid future problems, #4272
+- tests:
+
+  - fix the homebrew 1.9 issues on travis-ci, #4254
+  - fix duplicate test method name, #4311
+
+
+Version 1.1.8 (2018-12-09)
+--------------------------
 
 Fixes:
 
@@ -604,6 +655,9 @@ Compatibility notes:
   unexpected) was rather confusing and unexplainable at first to users.
   If you want that "do not backup NODUMP-flagged files" behaviour, use:
   borg create --exclude-nodump ...
+- If you are on Linux and do not need bsdflags archived, consider using
+  ``--nobsdflags`` with ``borg create`` to avoid additional syscalls and
+  speed up backup creation.
 
 Fixes:
 
