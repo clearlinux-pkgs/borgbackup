@@ -1,0 +1,7 @@
+# Install shell completion support
+mkdir -p %{buildroot}/usr/share/bash-completion/completions/
+install -m 0644 scripts/shell_completions/bash/borg %{buildroot}/usr/share/bash-completion/completions/borg
+mkdir -p %{buildroot}/usr/share/fish/completions
+install -m 0644 scripts/shell_completions/fish/borg.fish %{buildroot}/usr/share/fish/completions/borg.fish
+mkdir -p %{buildroot}/usr/share/zsh/site-functions
+install -m 0644 scripts/shell_completions/zsh/_borg %{buildroot}/usr/share/zsh/site-functions/_borg

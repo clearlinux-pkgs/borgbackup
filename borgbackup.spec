@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.9
-Release  : 24
+Release  : 25
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.9/borgbackup-1.1.9.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.9/borgbackup-1.1.9.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.9/borgbackup-1.1.9.tar.gz.asc
@@ -14,6 +14,7 @@ Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause CC0-1.0
 Requires: borgbackup-bin = %{version}-%{release}
+Requires: borgbackup-data = %{version}-%{release}
 Requires: borgbackup-license = %{version}-%{release}
 Requires: borgbackup-python = %{version}-%{release}
 Requires: borgbackup-python3 = %{version}-%{release}
@@ -39,10 +40,19 @@ What is BorgBackup?
 %package bin
 Summary: bin components for the borgbackup package.
 Group: Binaries
+Requires: borgbackup-data = %{version}-%{release}
 Requires: borgbackup-license = %{version}-%{release}
 
 %description bin
 bin components for the borgbackup package.
+
+
+%package data
+Summary: data components for the borgbackup package.
+Group: Data
+
+%description data
+data components for the borgbackup package.
 
 
 %package license
@@ -79,7 +89,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1549906806
+export SOURCE_DATE_EPOCH=1549909785
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
@@ -95,6 +105,14 @@ python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
+## install_append content
+mkdir -p %{buildroot}/usr/share/bash-completion/completions/
+install -m 0644 scripts/shell_completions/bash/borg %{buildroot}/usr/share/bash-completion/completions/borg
+mkdir -p %{buildroot}/usr/share/fish/completions
+install -m 0644 scripts/shell_completions/fish/borg.fish %{buildroot}/usr/share/fish/completions/borg.fish
+mkdir -p %{buildroot}/usr/share/zsh/site-functions
+install -m 0644 scripts/shell_completions/zsh/_borg %{buildroot}/usr/share/zsh/site-functions/_borg
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -103,6 +121,12 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 /usr/bin/borg
 /usr/bin/borgfs
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/bash-completion/completions/borg
+/usr/share/fish/completions/borg.fish
+/usr/share/zsh/site-functions/_borg
 
 %files license
 %defattr(0644,root,root,0755)
