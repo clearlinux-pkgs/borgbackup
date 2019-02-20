@@ -1,0 +1,22 @@
+From 335ef5652de92271cf35d36678aed0156ba63a66 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Wed, 13 Feb 2019 08:40:27 -0800
+Subject: [PATCH] Fix msgpack-python->msgpack
+
+---
+ src/borgbackup.egg-info/requires.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/borgbackup.egg-info/requires.txt b/src/borgbackup.egg-info/requires.txt
+index f2af76e..a4032f2 100644
+--- a/src/borgbackup.egg-info/requires.txt
++++ b/src/borgbackup.egg-info/requires.txt
+@@ -1,4 +1,4 @@
+-msgpack-python!=0.5.0,!=0.5.1,!=0.5.2,!=0.5.3,!=0.5.4,!=0.5.5,<=0.5.6,>=0.4.6
++msgpack!=0.5.0,!=0.5.1,!=0.5.2,!=0.5.3,!=0.5.4,!=0.5.5,<=0.5.6,>=0.4.6
+ 
+ [fuse]
+ llfuse<2.0
+-- 
+2.20.1
+

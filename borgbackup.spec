@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.9
-Release  : 26
+Release  : 27
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.9/borgbackup-1.1.9.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.9/borgbackup-1.1.9.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.9/borgbackup-1.1.9.tar.gz.asc
@@ -32,6 +32,7 @@ BuildRequires : setuptools_scm
 BuildRequires : tox
 BuildRequires : virtualenv
 BuildRequires : zstd-dev
+Patch1: 0001-Fix-msgpack-python-msgpack.patch
 
 %description
 What is BorgBackup?
@@ -83,13 +84,15 @@ python3 components for the borgbackup package.
 
 %prep
 %setup -q -n borgbackup-1.1.9
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1549909785
+export SOURCE_DATE_EPOCH=1550621388
+export LDFLAGS="${LDFLAGS} -fno-lto"
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
