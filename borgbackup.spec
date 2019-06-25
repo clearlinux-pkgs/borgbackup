@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.10
-Release  : 31
+Release  : 32
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz
 Source99 : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz.asc
@@ -22,6 +22,7 @@ Requires: llfuse
 Requires: msgpack-python
 BuildRequires : acl-dev
 BuildRequires : buildreq-distutils3
+BuildRequires : llfuse
 BuildRequires : lz4-dev
 BuildRequires : openssl-dev
 BuildRequires : pluggy
@@ -32,6 +33,7 @@ BuildRequires : setuptools_scm
 BuildRequires : tox
 BuildRequires : virtualenv
 BuildRequires : zstd-dev
+Patch1: 0001-Work-around-Borg-self-test-failing.patch
 
 %description
 What is BorgBackup?
@@ -83,15 +85,19 @@ python3 components for the borgbackup package.
 
 %prep
 %setup -q -n borgbackup-1.1.10
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1558118886
+export SOURCE_DATE_EPOCH=1561444681
 export GCC_IGNORE_WERROR=1
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 

@@ -1,0 +1,42 @@
+From c18d5473a38bead76441f058dda418cbb921d86b Mon Sep 17 00:00:00 2001
+From: Thiago Macieira <thiago.macieira@intel.com>
+Date: Mon, 24 Jun 2019 23:32:27 -0700
+Subject: [PATCH] Work around Borg self-test failing
+
+Our zlib is different from everyone else's. This test creates some
+Borg internal data, then serialises it, then *compresses* it, then
+compares the compressed result to a hardcoded value.
+
+This patch instead decompresses the expected value and compares that.
+
+Signed-off-by: Thiago Macieira <thiago.macieira@intel.com>
+---
+ src/borg/testsuite/hashindex.py | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/src/borg/testsuite/hashindex.py b/src/borg/testsuite/hashindex.py
+index 0b4b3bc5..8a180c88 100644
+--- a/src/borg/testsuite/hashindex.py
++++ b/src/borg/testsuite/hashindex.py
+@@ -300,7 +300,7 @@ def _serialize_hashindex(self, idx):
+             file = os.path.join(tempdir, 'idx')
+             idx.write(file)
+             with open(file, 'rb') as f:
+-                return self._pack(f.read())
++                return f.read()
+ 
+     def _deserialize_hashindex(self, bytestring):
+         with tempfile.TemporaryDirectory() as tempdir:
+@@ -321,7 +321,8 @@ def test_identical_creation(self):
+         idx1[H(2)] = 2**31 - 1, 0, 0
+         idx1[H(3)] = 4294962296, 0, 0  # 4294962296 is -5000 interpreted as an uint32_t
+ 
+-        assert self._serialize_hashindex(idx1) == self.HASHINDEX
++        x = self._serialize_hashindex(idx1)
++        assert x == self._unpack(self.HASHINDEX)
+ 
+     def test_read_known_good(self):
+         idx1 = self._deserialize_hashindex(self.HASHINDEX)
+-- 
+2.22.0
+
