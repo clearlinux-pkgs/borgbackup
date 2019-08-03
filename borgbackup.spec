@@ -6,10 +6,10 @@
 #
 Name     : borgbackup
 Version  : 1.1.10
-Release  : 33
+Release  : 34
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz
-Source99 : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz.asc
+Source1 : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC0-1.0
@@ -33,7 +33,7 @@ BuildRequires : setuptools_scm
 BuildRequires : tox
 BuildRequires : virtualenv
 BuildRequires : zstd-dev
-Patch1: 0001-Work-around-Borg-self-test-failing.patch
+Patch1: 0001-Fix-broken-test-that-relied-on-improper-zlib-assumpt.patch
 
 %description
 What is BorgBackup?
@@ -91,8 +91,8 @@ python3 components for the borgbackup package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1561444681
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1564858201
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
