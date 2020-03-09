@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.1.10
-Release  : 36
-URL      : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz
-Source1 : https://github.com/borgbackup/borg/releases/download/1.1.10/borgbackup-1.1.10.tar.gz.asc
+Version  : 1.1.11
+Release  : 37
+URL      : https://github.com/borgbackup/borg/releases/download/1.1.11/borgbackup-1.1.11.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.1.11/borgbackup-1.1.11.tar.gz
+Source1  : https://github.com/borgbackup/borg/releases/download/1.1.11/borgbackup-1.1.11.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC0-1.0
@@ -33,7 +33,6 @@ BuildRequires : setuptools_scm
 BuildRequires : tox
 BuildRequires : virtualenv
 BuildRequires : zstd-dev
-Patch1: 0001-Fix-broken-test-that-relied-on-improper-zlib-assumpt.patch
 
 %description
 What is BorgBackup?
@@ -78,21 +77,22 @@ python components for the borgbackup package.
 Summary: python3 components for the borgbackup package.
 Group: Default
 Requires: python3-core
+Provides: pypi(borgbackup)
 
 %description python3
 python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.1.10
-%patch1 -p1
+%setup -q -n borgbackup-1.1.11
+cd %{_builddir}/borgbackup-1.1.11
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564858201
+export SOURCE_DATE_EPOCH=1583769616
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -105,16 +105,17 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/borgbackup
-cp LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/LICENSE
-cp docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/docs_3rd_party_blake2_COPYING
-cp docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/docs_3rd_party_lz4_LICENSE
-cp docs/3rd_party/msgpack/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/docs_3rd_party_msgpack_COPYING
-cp docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/docs_3rd_party_zstd_LICENSE
+cp %{_builddir}/borgbackup-1.1.11/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c42e82be13a6ff0d2754555c546d4951dfa9eadc
+cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/d32fa0b0c2b059b3fd4d2a317d0cf1cd0da791d4
+cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d
+cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/msgpack/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/175e59be229a5bedc6be93e958a970385bb04a62
+cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c4130945ca3d1f8ea4a3e8af36d3c18b2232116c
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
 ## install_append content
+# Install shell completion support
 mkdir -p %{buildroot}/usr/share/bash-completion/completions/
 install -m 0644 scripts/shell_completions/bash/borg %{buildroot}/usr/share/bash-completion/completions/borg
 mkdir -p %{buildroot}/usr/share/fish/completions
@@ -139,11 +140,11 @@ install -m 0644 scripts/shell_completions/zsh/_borg %{buildroot}/usr/share/zsh/s
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/borgbackup/LICENSE
-/usr/share/package-licenses/borgbackup/docs_3rd_party_blake2_COPYING
-/usr/share/package-licenses/borgbackup/docs_3rd_party_lz4_LICENSE
-/usr/share/package-licenses/borgbackup/docs_3rd_party_msgpack_COPYING
-/usr/share/package-licenses/borgbackup/docs_3rd_party_zstd_LICENSE
+/usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d
+/usr/share/package-licenses/borgbackup/175e59be229a5bedc6be93e958a970385bb04a62
+/usr/share/package-licenses/borgbackup/c4130945ca3d1f8ea4a3e8af36d3c18b2232116c
+/usr/share/package-licenses/borgbackup/c42e82be13a6ff0d2754555c546d4951dfa9eadc
+/usr/share/package-licenses/borgbackup/d32fa0b0c2b059b3fd4d2a317d0cf1cd0da791d4
 
 %files python
 %defattr(-,root,root,-)
