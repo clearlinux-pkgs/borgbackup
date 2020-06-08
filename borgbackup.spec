@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.1.11
-Release  : 37
-URL      : https://github.com/borgbackup/borg/releases/download/1.1.11/borgbackup-1.1.11.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.1.11/borgbackup-1.1.11.tar.gz
-Source1  : https://github.com/borgbackup/borg/releases/download/1.1.11/borgbackup-1.1.11.tar.gz.asc
+Version  : 1.1.13
+Release  : 38
+URL      : https://github.com/borgbackup/borg/releases/download/1.1.13/borgbackup-1.1.13.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.1.13/borgbackup-1.1.13.tar.gz
+Source1  : https://github.com/borgbackup/borg/releases/download/1.1.13/borgbackup-1.1.13.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSD-3-Clause CC0-1.0
@@ -84,19 +84,19 @@ python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.1.11
-cd %{_builddir}/borgbackup-1.1.11
+%setup -q -n borgbackup-1.1.13
+cd %{_builddir}/borgbackup-1.1.13
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583769616
+export SOURCE_DATE_EPOCH=1591631226
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
@@ -105,11 +105,11 @@ python3 setup.py build
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/borgbackup
-cp %{_builddir}/borgbackup-1.1.11/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c42e82be13a6ff0d2754555c546d4951dfa9eadc
-cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/d32fa0b0c2b059b3fd4d2a317d0cf1cd0da791d4
-cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d
-cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/msgpack/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/175e59be229a5bedc6be93e958a970385bb04a62
-cp %{_builddir}/borgbackup-1.1.11/docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c4130945ca3d1f8ea4a3e8af36d3c18b2232116c
+cp %{_builddir}/borgbackup-1.1.13/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c42e82be13a6ff0d2754555c546d4951dfa9eadc
+cp %{_builddir}/borgbackup-1.1.13/docs/3rd_party/blake2/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/d32fa0b0c2b059b3fd4d2a317d0cf1cd0da791d4
+cp %{_builddir}/borgbackup-1.1.13/docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d
+cp %{_builddir}/borgbackup-1.1.13/docs/3rd_party/msgpack/COPYING %{buildroot}/usr/share/package-licenses/borgbackup/175e59be229a5bedc6be93e958a970385bb04a62
+cp %{_builddir}/borgbackup-1.1.13/docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c4130945ca3d1f8ea4a3e8af36d3c18b2232116c
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
