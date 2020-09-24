@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.13
-Release  : 38
+Release  : 39
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.13/borgbackup-1.1.13.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.13/borgbackup-1.1.13.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.1.13/borgbackup-1.1.13.tar.gz.asc
