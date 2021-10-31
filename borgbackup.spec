@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.17
-Release  : 55
+Release  : 56
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz.asc
@@ -97,7 +97,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635708035
+export SOURCE_DATE_EPOCH=1635708121
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
