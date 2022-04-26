@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.17
-Release  : 58
+Release  : 59
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz.asc
@@ -18,8 +18,8 @@ Requires: borgbackup-data = %{version}-%{release}
 Requires: borgbackup-license = %{version}-%{release}
 Requires: borgbackup-python = %{version}-%{release}
 Requires: borgbackup-python3 = %{version}-%{release}
-Requires: msgpack-python
 Requires: pypi(llfuse)
+Requires: pypi(msgpack)
 BuildRequires : acl-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : lz4-dev
@@ -95,7 +95,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641836432
+export SOURCE_DATE_EPOCH=1650932030
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "

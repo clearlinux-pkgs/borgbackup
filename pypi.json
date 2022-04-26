@@ -1,0 +1,6 @@
+{
+	"name": "borgbackup",
+	"requires": ["packaging"],
+	"license": "BSD-3-Clause",
+	"summary": "Deduplicated, encrypted, authenticated and compressed backups"
+}
