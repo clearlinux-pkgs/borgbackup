@@ -3,3 +3,4 @@
 openssl-dev
 lz4-dev
 zstd-dev
+pypi-cython
