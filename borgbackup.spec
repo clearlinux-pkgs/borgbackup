@@ -6,7 +6,7 @@
 #
 Name     : borgbackup
 Version  : 1.1.17
-Release  : 60
+Release  : 61
 URL      : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.1.17/borgbackup-1.1.17.tar.gz.asc
