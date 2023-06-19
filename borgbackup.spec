@@ -7,7 +7,7 @@
 #
 Name     : borgbackup
 Version  : 1.2.4
-Release  : 67
+Release  : 68
 URL      : https://github.com/borgbackup/borg/releases/download/1.2.4/borgbackup-1.2.4.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.2.4/borgbackup-1.2.4.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.2.4/borgbackup-1.2.4.tar.gz.asc
@@ -16,8 +16,6 @@ Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause
 Requires: borgbackup-bin = %{version}-%{release}
 Requires: borgbackup-data = %{version}-%{release}
-Requires: borgbackup-filemap = %{version}-%{release}
-Requires: borgbackup-lib = %{version}-%{release}
 Requires: borgbackup-license = %{version}-%{release}
 Requires: borgbackup-python = %{version}-%{release}
 Requires: borgbackup-python3 = %{version}-%{release}
@@ -28,8 +26,6 @@ BuildRequires : buildreq-distutils3
 BuildRequires : lz4-dev
 BuildRequires : openssl-dev
 BuildRequires : pypi(cython)
-BuildRequires : pypi(msgpack)
-BuildRequires : pypi(packaging)
 BuildRequires : pypi(pkgconfig)
 BuildRequires : pypi(py)
 BuildRequires : pypi(setuptools)
@@ -53,7 +49,6 @@ Summary: bin components for the borgbackup package.
 Group: Binaries
 Requires: borgbackup-data = %{version}-%{release}
 Requires: borgbackup-license = %{version}-%{release}
-Requires: borgbackup-filemap = %{version}-%{release}
 
 %description bin
 bin components for the borgbackup package.
@@ -65,25 +60,6 @@ Group: Data
 
 %description data
 data components for the borgbackup package.
-
-
-%package filemap
-Summary: filemap components for the borgbackup package.
-Group: Default
-
-%description filemap
-filemap components for the borgbackup package.
-
-
-%package lib
-Summary: lib components for the borgbackup package.
-Group: Libraries
-Requires: borgbackup-data = %{version}-%{release}
-Requires: borgbackup-license = %{version}-%{release}
-Requires: borgbackup-filemap = %{version}-%{release}
-
-%description lib
-lib components for the borgbackup package.
 
 
 %package license
@@ -106,10 +82,8 @@ python components for the borgbackup package.
 %package python3
 Summary: python3 components for the borgbackup package.
 Group: Default
-Requires: borgbackup-filemap = %{version}-%{release}
 Requires: python3-core
 Provides: pypi(borgbackup)
-Requires: pypi(msgpack)
 Requires: pypi(packaging)
 
 %description python3
@@ -131,12 +105,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1679614091
+export SOURCE_DATE_EPOCH=1687203225
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export MAKEFLAGS=%{?_smp_mflags}
 pypi-dep-fix.py . msgpack
 python3 setup.py build
@@ -198,14 +172,6 @@ install -m 0644 scripts/shell_completions/zsh/_borg %{buildroot}/usr/share/zsh/s
 /usr/share/fish/completions/borg.fish
 /usr/share/zsh/site-functions/_borg
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-borgbackup
-
-%files lib
-%defattr(-,root,root,-)
-/usr/share/clear/optimized-elf/other*
-
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d
@@ -216,4 +182,5 @@ install -m 0644 scripts/shell_completions/zsh/_borg %{buildroot}/usr/share/zsh/s
 
 %files python3
 %defattr(-,root,root,-)
+/V3/usr/lib/python3*/*
 /usr/lib/python3*/*
