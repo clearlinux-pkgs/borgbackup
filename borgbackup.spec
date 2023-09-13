@@ -6,11 +6,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.2.4
-Release  : 68
-URL      : https://github.com/borgbackup/borg/releases/download/1.2.4/borgbackup-1.2.4.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.2.4/borgbackup-1.2.4.tar.gz
-Source1  : https://github.com/borgbackup/borg/releases/download/1.2.4/borgbackup-1.2.4.tar.gz.asc
+Version  : 1.2.6
+Release  : 69
+URL      : https://github.com/borgbackup/borg/releases/download/1.2.6/borgbackup-1.2.6.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.2.6/borgbackup-1.2.6.tar.gz
+Source1  : https://github.com/borgbackup/borg/releases/download/1.2.6/borgbackup-1.2.6.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause
@@ -91,10 +91,10 @@ python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.2.4
-cd %{_builddir}/borgbackup-1.2.4
+%setup -q -n borgbackup-1.2.6
+cd %{_builddir}/borgbackup-1.2.6
 pushd ..
-cp -a borgbackup-1.2.4 buildavx2
+cp -a borgbackup-1.2.6 buildavx2
 popd
 
 %build
@@ -105,7 +105,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1687203225
+export SOURCE_DATE_EPOCH=1694645976
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
