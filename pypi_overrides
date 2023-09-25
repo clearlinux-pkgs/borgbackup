@@ -1,1 +1,2 @@
-msgpack
+# msgpack can't be overridden as borg fails if it doesn't match
+# look at borg upstream to see if they have an update version patch

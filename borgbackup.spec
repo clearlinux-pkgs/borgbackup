@@ -7,7 +7,7 @@
 #
 Name     : borgbackup
 Version  : 1.2.6
-Release  : 70
+Release  : 71
 URL      : https://github.com/borgbackup/borg/releases/download/1.2.6/borgbackup-1.2.6.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.2.6/borgbackup-1.2.6.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.2.6/borgbackup-1.2.6.tar.gz.asc
@@ -39,6 +39,7 @@ BuildRequires : zstd-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: backport-msgpack.patch
 
 %description
 Do NOT run the examples without isolation (e.g Vagrant) or
@@ -93,6 +94,7 @@ python3 components for the borgbackup package.
 %prep
 %setup -q -n borgbackup-1.2.6
 cd %{_builddir}/borgbackup-1.2.6
+%patch -P 1 -p1
 pushd ..
 cp -a borgbackup-1.2.6 buildavx2
 popd
@@ -105,14 +107,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1694645976
+export SOURCE_DATE_EPOCH=1695662723
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export MAKEFLAGS=%{?_smp_mflags}
-pypi-dep-fix.py . msgpack
 python3 setup.py build
 
 pushd ../buildavx2/
@@ -124,7 +125,6 @@ export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
-pypi-dep-fix.py . msgpack
 python3 setup.py build
 
 popd
@@ -132,10 +132,10 @@ popd
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/borgbackup
+cp %{_builddir}/borgbackup-%{version}/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/17ac55b01de87af8a579a2fd680aa6c9b5fd9808 || :
 cp %{_builddir}/borgbackup-%{version}/docs/3rd_party/lz4/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d || :
 cp %{_builddir}/borgbackup-%{version}/docs/3rd_party/zstd/LICENSE %{buildroot}/usr/share/package-licenses/borgbackup/c4130945ca3d1f8ea4a3e8af36d3c18b2232116c || :
 python3 -tt setup.py build  install --root=%{buildroot}
-pypi-dep-fix.py %{buildroot} msgpack
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -175,6 +175,7 @@ install -m 0644 scripts/shell_completions/zsh/_borg %{buildroot}/usr/share/zsh/s
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/borgbackup/10bf56381baaf07f0647b93a810eb4e7e9545e8d
+/usr/share/package-licenses/borgbackup/17ac55b01de87af8a579a2fd680aa6c9b5fd9808
 /usr/share/package-licenses/borgbackup/c4130945ca3d1f8ea4a3e8af36d3c18b2232116c
 
 %files python
