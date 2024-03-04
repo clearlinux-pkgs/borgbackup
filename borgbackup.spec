@@ -9,7 +9,7 @@
 #
 Name     : borgbackup
 Version  : 1.2.7
-Release  : 74
+Release  : 75
 URL      : https://github.com/borgbackup/borg/releases/download/1.2.7/borgbackup-1.2.7.tar.gz
 Source0  : https://github.com/borgbackup/borg/releases/download/1.2.7/borgbackup-1.2.7.tar.gz
 Source1  : https://github.com/borgbackup/borg/releases/download/1.2.7/borgbackup-1.2.7.tar.gz.asc
@@ -42,6 +42,7 @@ BuildRequires : zstd-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: 0001-msgpack-tomfoolery.patch
 
 %description
 Do NOT run the examples without isolation (e.g Vagrant) or
@@ -96,6 +97,7 @@ python3 components for the borgbackup package.
 %prep
 %setup -q -n borgbackup-1.2.7
 cd %{_builddir}/borgbackup-1.2.7
+%patch -P 1 -p1
 pushd ..
 cp -a borgbackup-1.2.7 buildavx2
 popd
@@ -108,7 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1709594340
+export SOURCE_DATE_EPOCH=1709596184
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
