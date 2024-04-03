@@ -8,11 +8,11 @@
 # Source0 file verified with key 0x243ACFA951F78E01 (tw-public@gmx.de)
 #
 Name     : borgbackup
-Version  : 1.2.7
-Release  : 76
-URL      : https://github.com/borgbackup/borg/releases/download/1.2.7/borgbackup-1.2.7.tar.gz
-Source0  : https://github.com/borgbackup/borg/releases/download/1.2.7/borgbackup-1.2.7.tar.gz
-Source1  : https://github.com/borgbackup/borg/releases/download/1.2.7/borgbackup-1.2.7.tar.gz.asc
+Version  : 1.2.8
+Release  : 77
+URL      : https://github.com/borgbackup/borg/releases/download/1.2.8/borgbackup-1.2.8.tar.gz
+Source0  : https://github.com/borgbackup/borg/releases/download/1.2.8/borgbackup-1.2.8.tar.gz
+Source1  : https://github.com/borgbackup/borg/releases/download/1.2.8/borgbackup-1.2.8.tar.gz.asc
 Summary  : Deduplicated, encrypted, authenticated and compressed backups
 Group    : Development/Tools
 License  : BSD-2-Clause BSD-3-Clause
@@ -23,7 +23,6 @@ Requires: borgbackup-python = %{version}-%{release}
 Requires: borgbackup-python3 = %{version}-%{release}
 Requires: pypi(llfuse)
 Requires: pypi(msgpack)
-Requires: xz-lib
 BuildRequires : acl-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : lz4-dev
@@ -43,7 +42,6 @@ BuildRequires : zstd-dev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
-Patch1: 0001-msgpack-tomfoolery.patch
 
 %description
 Here we store 3rd party documentation, licenses, etc.
@@ -98,11 +96,10 @@ python3 components for the borgbackup package.
 
 
 %prep
-%setup -q -n borgbackup-1.2.7
-cd %{_builddir}/borgbackup-1.2.7
-%patch -P 1 -p1
+%setup -q -n borgbackup-1.2.8
+cd %{_builddir}/borgbackup-1.2.8
 pushd ..
-cp -a borgbackup-1.2.7 buildavx2
+cp -a borgbackup-1.2.8 buildavx2
 popd
 
 %build
@@ -113,7 +110,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1712093027
+export SOURCE_DATE_EPOCH=1712167581
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "

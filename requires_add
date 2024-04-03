@@ -2,4 +2,3 @@
 # picked up automatically. One name per line, no whitespace.
 pypi(llfuse)
 pypi(msgpack)
-xz-lib
