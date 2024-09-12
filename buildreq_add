@@ -4,3 +4,5 @@ openssl-dev
 lz4-dev
 zstd-dev
 pypi-cython
+xxHash-dev
+acl-dev
